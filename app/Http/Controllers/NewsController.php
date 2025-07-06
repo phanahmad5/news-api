@@ -2,36 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class NewsController extends Controller
 {
-    public function index()
-    {
-        return News::all();
+    public function index() {
+        return response()->json(News::all());
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $news = News::create($request->all());
         return response()->json($news, 201);
     }
 
-    public function show(News $news)
-    {
-        return $news;
-    }
-
-    public function update(Request $request, News $news)
-    {
+    public function update(Request $request, $id) {
+        $news = News::findOrFail($id);
         $news->update($request->all());
         return response()->json($news);
     }
 
-    public function destroy(News $news)
-    {
-        $news->delete();
-        return response()->json(['message' => 'Deleted successfully']);
+    public function destroy($id) {
+        News::findOrFail($id)->delete();
+        return response()->json(null, 204);
     }
 }
