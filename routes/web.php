@@ -8,4 +8,4 @@ Route::get('/', function () {
 
 Route::get('/cek', function () {
     return response()->json(['message' => 'API aktif']);
-});//
+});
